@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Sticky Notes — CRUD (Vishnu Dev)</title>
+  <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="brand">
+ 
+      <img src="./assets/image/book.webp" alt="stationery"/>
+      <div>
+        <h1>Sticky Notes</h1>
+        <p class="muted">· Quick notes · Color categories · LocalStorage ·</p>
+      </div>
+    </div>
+
+    <div class="right-controls">
+      <!-- open trash drawer -->
+      <button id="openTrashBtn" class="icon small" title="Open Trash">🚮</button>
+      <button id="themeToggle" class="theme-toggle" title="Toggle theme">🌙</button>
+      <span class="tag">Vishnu Dev</span>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- LEFT: Form + Filter -->
+    <aside class="panel form-panel">
+      <div class="row">
+        <div style="flex:1">
+          <label for="title">Title</label>
+          <input id="title" type="text" placeholder="Note title..." autocomplete="off"/>
+        </div>
+      </div>
+
+      <div>
+        <label for="content">Content</label>
+        <textarea id="content" placeholder="Write something..." ></textarea>
+      </div>
+
+      <!-- Filter (single soft-pill button + slide-down menu) -->
+      <div class="filter-area">
+        <button id="filterBtn" class="filter-main btn-pill" aria-haspopup="true" aria-expanded="false">
+          🎨 Filter
+          <span class="chev">▾</span>
+        </button>
+
+        <div id="filterMenu" class="filter-menu" role="menu" aria-hidden="true">
+          <!-- menu entries will be populated by JS for easy editing -->
+        </div>
+      </div>
+
+      <div>
+        <label>Color / Category (for new note)</label>
+        <div id="colorPalette" class="colors small-row" aria-label="Color choices">
+          <button class="color-btn selected" data-color="yellow" style="background:#ffd966" aria-label="Yellow"></button>
+          <button class="color-btn" data-color="pink"   style="background:#ff99c8" aria-label="Pink"></button>
+          <button class="color-btn" data-color="green"  style="background:#b8e986" aria-label="Green"></button>
+          <button class="color-btn" data-color="orange" style="background:#ffbe7b" aria-label="Orange"></button>
+          <button class="color-btn" data-color="blue"   style="background:#9dd3ff" aria-label="Blue"></button>
+          <button class="color-btn" data-color="red"    style="background:#ff6b6b" aria-label="Red"></button>
+          <button class="color-btn" data-color="teal"   style="background:#7af2ac" aria-label="Teal"></button>
+          <button class="color-btn" data-color="purple" style="background:#c79aff" aria-label="Purple"></button>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="saveBtn" class="btn primary btn-tooltip" data-tip="Shortcut: Ctrl+Enter">Add Note</button>
+        <button id="clearBtn" class="btn ghost">Clear</button>
+      </div>
+
+      <p class="tip">Tip: Drag notes to reorder. Press <kbd>Ctrl</kbd>+<kbd>Enter</kbd> to save.</p>
+    </aside>
+
+    <!-- RIGHT: Notes area -->
+    <section class="panel notes-panel">
+      <div class="toolbar">
+        <input id="searchInput" class="search" placeholder="Search notes..." />
+        <button id="clearFilter" class="btn ghost">Show All</button>
+      </div>
+
+      <div id="notesGrid" class="grid" aria-live="polite"></div>
+      <div id="emptyState" class="empty" style="display:none">No notes yet — create one from the left.</div>
+    </section>
+  </main>
+
+  <!-- Trash Drawer -->
+  <aside id="trashDrawer" class="trash-drawer" aria-hidden="true">
+    <div class="trash-header">
+      <h3>Trash</h3>
+      <div>
+        <button id="emptyTrashBtn" class="btn ghost">Empty Trash</button>
+        <button id="closeTrashBtn" class="icon">✖</button>
+      </div>
+    </div>
+    <div id="trashList" class="trash-list"></div>
+  </aside>
+
+  <!-- Footer -->
+  <footer id="globalFooter" class="global-footer" aria-hidden="false"></footer>
+
+  <script src="./assets/js/app.js"></script>
+</body>
+</html>

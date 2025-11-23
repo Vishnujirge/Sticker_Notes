@@ -1,0 +1,216 @@
+/* ================= GLOBAL ================= */
+html { font-size: 16px; }
+:root{
+  --bg-dark:#0b1220;
+  --panel-dark:rgba(255,255,255,0.03);
+  --muted-dark:#bfc8d6;
+  --accent-gold:#d6c27d;
+  --card-shadow:0 12px 30px rgba(2,6,23,0.55);
+  --glass: rgba(255,255,255,0.02);
+  --text-light:#0b1220;
+}
+
+*{box-sizing:border-box;}
+
+body{
+  margin:0;
+  padding:20px;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  background:var(--bg-dark);
+  color:#e6eef8;
+  transition: background-color .2s ease, color .2s ease;
+  min-height:100vh;
+}
+
+/* Light theme */
+body.light{
+  background:#f6f8fb;
+  color:var(--text-light);
+}
+
+/* ================= HEADER ================= */
+.header{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:20px; }
+.brand{ display:flex; gap:12px; align-items:center; }
+.brand img{ width:70px; height:70px; border-radius:12px; object-fit:cover; border:2px solid rgba(255,255,255,0.05); }
+.brand h1{ margin:0; font-size:1.4rem; }
+.muted{ margin:2px 0 0; font-size:0.85rem; opacity:0.75; color:var(--muted-dark); }
+
+.right-controls{ display:flex; gap:10px; align-items:center; }
+.theme-toggle{ padding:6px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:transparent; cursor:pointer; font-size:1.15rem; color:inherit; }
+.tag{ padding:6px 10px; border-radius:999px; background:rgba(255,255,255,0.05); font-size:0.78rem; font-weight:600; color:var(--muted-dark); }
+
+/* ================= LAYOUT ================= */
+.container{ display:grid; grid-template-columns: 1fr 2fr; gap:22px; align-items:start; }
+@media(max-width:900px){ .container{ grid-template-columns: 1fr; } }
+
+/* ================= PANELS ================= */
+.panel{
+  background:var(--panel-dark);
+  padding:18px;
+  border-radius:14px;
+  box-shadow:var(--card-shadow);
+  width:100%;
+}
+body.light .panel{ background:var(--panel-light); box-shadow:0 8px 20px rgba(12,20,30,0.06); }
+
+/* ================= FORM PANEL ================= */
+.form-panel{ display:flex; flex-direction:column; gap:14px; }
+
+label{ display:block; font-size:0.95rem; color:var(--muted-dark); margin-bottom:6px; }
+
+input, textarea, .search{
+  width:100%;
+  padding:12px 14px;
+  border-radius:10px;
+  border:1.5px solid rgba(255,255,255,0.08);
+  background:transparent;
+  color:inherit;
+  font-size:1rem;
+  outline:none;
+  box-sizing:border-box;
+}
+textarea{ min-height:120px; resize:vertical; }
+
+/* ================= FILTER MAIN BUTTON + MENU ================= */
+.filter-area{ position:relative; margin-bottom:4px; }
+.btn-pill{
+  display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px;
+  background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); color:var(--muted-dark); cursor:pointer; font-weight:700;
+}
+.btn-pill .chev{ margin-left:6px; opacity:0.9; font-size:0.9rem; }
+
+/* slide-down menu */
+.filter-menu{
+  position:absolute; left:0; top:46px; width:220px; background:var(--panel-dark); border-radius:10px; padding:8px;
+  box-shadow:0 10px 30px rgba(2,6,23,0.6); border:1px solid rgba(255,255,255,0.03);
+  transform-origin: top left; transition: transform .18s ease, opacity .18s ease;
+  opacity:0; transform: translateY(-6px) scale(0.98); pointer-events:none;
+}
+.filter-menu.open{ opacity:1; transform: translateY(0) scale(1); pointer-events:auto; }
+
+/* each row */
+.filter-row{ display:flex; align-items:center; gap:8px; padding:8px; border-radius:8px; cursor:pointer; transition: background .12s; }
+.filter-row:hover{ background: rgba(255,255,255,0.02); }
+.filter-row .emoji{ width:20px; display:inline-block; text-align:center; }
+.filter-row .label{ font-weight:700; color:var(--muted-dark); margin-left:4px; }
+
+/* active highlight */
+.filter-row.active{ background:var(--accent-gold); color:#111; box-shadow:0 8px 20px rgba(214,194,125,0.18); }
+
+/* colors row (for new note) */
+.colors{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:6px; }
+.color-btn{
+  width:40px; height:40px; border-radius:10px; border:3px solid rgba(0,0,0,0.12);
+  cursor:pointer; transition:transform .12s ease, box-shadow .12s ease;
+}
+.color-btn.selected{ transform:translateY(-4px); box-shadow:0 12px 22px rgba(2,6,23,0.45); border-color:rgba(255,255,255,0.9); }
+
+/* buttons */
+.controls{ display:flex; gap:12px; margin-top:6px; }
+.btn{ padding:12px 18px; border-radius:10px; font-weight:700; cursor:pointer; border:none; font-size:1rem; }
+.btn.primary{ background:#ffd166; color:#000; }
+.btn.ghost{ background:transparent; border:1px solid rgba(255,255,255,0.08); color:var(--muted-dark); }
+
+/* tooltip for save */
+.btn-tooltip{ position:relative; }
+.btn-tooltip:hover::after{
+  content: attr(data-tip);
+  position:absolute; bottom:-36px; left:50%; transform:translateX(-50%);
+  background:rgba(0,0,0,0.85); color:white; padding:6px 10px; border-radius:6px; font-size:0.75rem;
+  white-space:nowrap; box-shadow:0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* tip */
+.tip{ margin-top:8px; font-size:0.92rem; color:rgba(255,255,255,0.75); }
+
+/* ================= NOTES PANEL ================= */
+.notes-panel{ display:flex; flex-direction:column; gap:8px; }
+.toolbar{ display:flex; gap:12px; align-items:center; }
+.search{ flex:1; }
+
+/* grid */
+.grid{
+  margin-top:10px;
+  display:grid;
+  gap:20px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
+/* ================= NOTE CARDS ================= */
+.note-card{
+  padding:18px;
+  border-radius:12px;
+  min-height:160px;
+  position:relative;
+  box-shadow: 0 10px 22px rgba(2,6,23,0.5);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+}
+.note-card.dragging { opacity:0.6; transform:scale(0.96); box-shadow:0 18px 45px rgba(2,6,23,0.45); }
+.note-title{ font-size:1.15rem; margin:0 0 8px; font-weight:700; color:inherit; }
+.note-content{ font-size:1rem; color:inherit; white-space:pre-wrap; }
+
+/* color blocks */
+.c-yellow{ background:#ffd966; color:#1d1d1d; }
+.c-pink{ background:#ff99c8; color:#1d1d1d; }
+.c-green{ background:#b8e986; color:#1d1d1d; }
+.c-orange{ background:#ffbe7b; color:#1d1d1d; }
+.c-blue{ background:#9dd3ff; color:#042a45; }
+.c-red{ background:#ff6b6b; color:#1d1d1d; }
+.c-teal{ background:#7af2ac; color:#042a45; }
+.c-purple{ background:#c79aff; color:#1d1d1d; }
+
+/* card actions */
+.card-actions{ position:absolute; top:10px; right:10px; display:flex; gap:8px; z-index:3; }
+.icon-btn{ width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; border:none; cursor:pointer; font-size:1rem; color:white; }
+.icon-btn:focus{ outline:2px solid rgba(0,0,0,0.12); }
+
+/* edit / delete / pin */
+.edit-btn{ background:#2ea44f; } /* green */
+.del-btn{ background:#e5534b; }  /* red */
+.pin-btn{ background:#f0c330; color:#1b1b1b; }
+
+/* pinned look */
+.note-card.pinned{ transform:translateY(-6px); box-shadow:0 20px 42px rgba(0,0,0,0.45); }
+
+/* drag-over */
+.note-drag-over{ outline:3px dashed rgba(255,255,255,0.2); transform:translateY(-4px); }
+
+/* empty state */
+.empty{ padding:16px; text-align:center; border-radius:10px; opacity:0.8; color:var(--muted-dark); }
+
+/* ================= TRASH DRAWER ================= */
+.trash-drawer{
+  position:fixed; right:-420px; top:0; width:420px; height:100vh; background:var(--panel-dark); box-shadow:-30px 0 50px rgba(2,6,23,0.6);
+  transition:right .28s cubic-bezier(.2,.9,.2,1); z-index:9999; padding:18px; display:flex; flex-direction:column;
+}
+.trash-drawer.open{ right:0; }
+.trash-header{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+.trash-list{ overflow:auto; padding:6px; display:flex; flex-direction:column; gap:10px; }
+.trash-item{ background:rgba(255,255,255,0.02); padding:12px; border-radius:10px; display:flex; justify-content:space-between; align-items:flex-start; gap:8px; }
+.trash-item .meta{ font-size:0.9rem; color:var(--muted-dark); }
+.trash-actions{ display:flex; gap:8px; }
+
+/* ================= FOOTER ================= */
+.global-footer{
+  width:100%;
+  text-align:center;
+  color:var(--accent-gold);
+  opacity:0.85;
+  font-size:0.9rem;
+  margin-top:30px;
+  padding:8px 0;
+}
+
+/* responsive tweaks */
+@media(max-width:768px){
+  .brand img{ width:60px; height:60px; }
+  .grid{ grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); }
+  .color-btn{ width:36px; height:36px; }
+  .trash-drawer{ width:100%; right:-100%; }
+  .trash-drawer.open{ right:0; left:0; }
+  .filter-menu{ left:8px; right:8px; width:auto; }
+}
