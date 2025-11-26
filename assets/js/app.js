@@ -1,5 +1,4 @@
-/* PRO — FINAL: CRUD + Pin + Trash Drawer + Filter Drawer + Drag + Theme + Tooltip */
-
+const cl= console.log;
 const $ = sel => document.querySelector(sel);
 
 // DOM refs
